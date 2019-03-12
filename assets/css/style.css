@@ -1,3 +1,25 @@
 body {
-    background-image: url(../images/tileable_wood_texture_@2X.png)
+    background-image: url(../images/tileable_wood_texture_@2X.png);
+    }
+
+header {
+    margin: 50px;
+    font-family: 'Caveat Brush', cursive;
+    color: #b03719;
+    font-size: 80px;
+    text-align: center;
+}
+
+.content-container {
+    display: block;
+    margin: auto;
+    padding: 5px;
+    width: 75%;
+    height: 500px;
+    text-align: center;
+    font-family: 'Overlock', cursive;
+    font-size: 20px;
+    color: #b03719;
+    background-color: #fcefe0;
+    border: 3px solid #b03719;
 }
