@@ -15,7 +15,7 @@ header {
     margin: auto;
     padding: 5px;
     width: 75%;
-    height: 550px;
+    height: 500px;
     text-align: center;
     font-family: 'Overlock', cursive;
     font-size: 20px;
@@ -27,5 +27,37 @@ header {
 #timer {
     /* border: 1px dotted #b03719; */
     margin: 30px 0px;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+#question {
+    /* border: 1px dotted green; */
     font-size: 25px;
+    margin: 50px auto;
+
+}
+
+.answer {
+    /* border: 1px dotted blue; */
+    display: block;
+    width: 350px;
+    font-size: 20px;
+    text-align: center;
+    margin: 20px auto;
+}
+
+button {
+    margin: 150px auto;
+    width: 100px;
+    font-family: 'Overlock', cursive;
+    font-size: 30px;
+    color: #fcefe0;
+    background-color: #b03719;
+    border-radius: 12px;
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    -ms-border-radius: 12px;
+    -o-border-radius: 12px;
+    /* opacity: 0.5; */
 }
