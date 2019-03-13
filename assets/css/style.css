@@ -15,11 +15,17 @@ header {
     margin: auto;
     padding: 5px;
     width: 75%;
-    height: 500px;
+    height: 550px;
     text-align: center;
     font-family: 'Overlock', cursive;
     font-size: 20px;
     color: #b03719;
     background-color: #fcefe0;
     border: 3px solid #b03719;
+}
+
+#timer {
+    /* border: 1px dotted #b03719; */
+    margin: 30px 0px;
+    font-size: 25px;
 }
