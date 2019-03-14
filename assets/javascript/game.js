@@ -1,4 +1,3 @@
-let questionsArr = []
 let timeLeft = 30
 let elem = document.getElementById('timer')
 
@@ -12,58 +11,94 @@ let countDown = _ => {
         timeLeft--
     }
 }
-let questionSet = {
 
-    'Question1': {
+// question set array
+let questionSet = [
+
+    {
         question: `How many donuts in a Baker's Dozen?`,
-        answer1: 'Eleven',
-        rightAnswer: 'Thirteen',
-        answer2: 'Twelve',
-        answer3: `There is no such thing as a Baker's Dozen`,
+        answerA: 'Eleven',
+        answerB: 'Thirteen',
+        answerC: 'Twelve',
+        answerD: `There is no such thing as a Baker's Dozen`,
+        correct: 'B',
         display: `In the 1260s, British breadmakers were notorious for shorting customers with skimpy loaves. King Henry III was so irked by the problem that he implemented a new law to standardize the weight of a loaf—selling puny loaves could result in beatings or jail time. Since bakers wanted to stay on the right side of the law, one common trick was to give 13 loaves to any customer buying a dozen. Even if the loaves were light, the extra would cover the shortfall.`
     },
 
-    'Question2': {
+    {
         question: 'What kind of animal was Lassie?',
-        rightAnswer: 'Dog',
-        answer1: 'Dolphin',
-        answer2: 'Cat',
-        answer3: 'Bear',
-        display: '<img src="../images/lassie.jpg">'
+        answerA: 'Dog',
+        answerB: 'Dolphin',
+        answerC: 'Cat',
+        answerD: 'Bear',
+        correct: 'A',
+        displayImage: '<img src="./assets/images/lassie.jpg">',
+        displayText: 'Yes! Lassie was a dog.',
     },
 
-    'Question3': {
+    {
         question: 'In which city would you find the Tower of London?',
-        answer1: 'Paris',
-        answer2: 'Los Angeles',
-        answer3: 'Frankfurt',
-        rightAnswer: 'London',
-        display: '<img src="../images/tower-of-london.jpg">'
+        answerA: 'Paris',
+        answerB: 'Los Angeles',
+        answerC: 'Frankfurt',
+        answerD: 'London',
+        correct: 'D',
+        display: '<img src="./assets/images/tower-of-london.jpg">'
     },
 
-    'Question4': {
+    {
         question: 'What sound does an Anteater make?',
-        answer1: 'Zoom Zoom',
-        answer2: 'Yum Yum',
-        rightAnswer: 'Zot Zot',
-        answer3: 'Meow',
-        display: '<img src="../images/anteater.jpg">'
+        answerA: 'Zoom Zoom',
+        answerB: 'Yum Yum',
+        answerC: 'Zot Zot',
+        answerD: 'Meow',
+        correct: 'C',
+        displayText: 'Correct!',
+        displayImage: '<img src="./assets/images/anteater.jpg">',
     }
+]
+
+// identifies index position of last question in array
+let lasQuestion = questionSet.length - 1
+
+// sets current question to index 0
+let currentQuestion = 0
+
+let renderQuestion = () => {
+    document.querySelector('#question').innerHTML = `${questionSet[currentQuestion].question}`
+    document.querySelector('#A').innerHTML = `${questionSet[currentQuestion].answerA}`
+    document.querySelector('#B').innerHTML = `${questionSet[currentQuestion].answerB}`
+    document.querySelector('#C').innerHTML = `${questionSet[currentQuestion].answerC}`
+    document.querySelector('#D').innerHTML = `${questionSet[currentQuestion].answerD}`
 }
 
-let renderQ1 = _ => {
-    document.querySelector('#startBtn').innerHTML = ``
-    document.querySelector('#question').innerHTML = `${questionSet.Question1.question}`
-    document.querySelector('#answerA').innerHTML = `${questionSet.Question1.answer1}`
-    document.querySelector('#answerB').innerHTML = `${questionSet.Question1.rightAnswer}`
-    document.querySelector('#answerC').innerHTML = `${questionSet.Question1.answer2}`
-    document.querySelector('#answerD').innerHTML = `${questionSet.Question1.answer3}`
+const clearPage = _ => {
+    document.querySelector('#timer').innerHTML = ``
+    document.querySelector('#question').innerHTML = ``
+    document.querySelector('#A').innerHTML = ``
+    document.querySelector('#B').innerHTML = ``
+    document.querySelector('#C').innerHTML = ``
+    document.querySelector('#D').innerHTML = ``
 }
 
 let startGame = _ => {
+    document.querySelector('#startBtn').innerHTML = ``
     countDown()
-    renderQ1()
-    
+    currentQuestion = 1
+    renderQuestion()
+
+}
+
+let checkAnswer = (answer) => {
+    if (questionSet[currentQuestion].correct === answer) {
+        clearPage() // the timer is not clearing
+        clearTimeout(timer) // the timer is restarting when the results page is displayed
+        document.querySelector('#question').innerHTML = `${questionSet[currentQuestion].displayText}`
+        document.querySelector('.answerList').innerHTML = `${questionSet[currentQuestion].displayImage}`
+    } else {
+        alert('WRONG!!!')
+        console.log(answer)
+    }
 }
 
 let init = _ => {

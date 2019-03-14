@@ -38,6 +38,10 @@ header {
 
 }
 
+.answerList {
+    /* border: 1px dotted; */
+}
+
 .answer {
     /* border: 1px dotted blue; */
     display: block;
@@ -47,6 +51,12 @@ header {
     margin: 20px auto;
 }
 
+.answer:hover {
+    background-color: #b03719;
+    color: #fcefe0;
+    cursor: pointer;
+}
+
 button {
     margin: 115px auto;
     width: 100px;
@@ -54,6 +64,7 @@ button {
     font-size: 30px;
     color: #fcefe0;
     background-color: #b03719;
+    cursor: pointer;
     border-radius: 12px;
     -webkit-border-radius: 12px;
     -moz-border-radius: 12px;
