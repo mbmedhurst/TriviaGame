@@ -6,7 +6,7 @@ header {
     margin: 50px;
     font-family: 'Caveat Brush', cursive;
     color: #b03719;
-    font-size: 80px;
+    font-size: 65px;
     text-align: center;
 }
 
@@ -15,7 +15,7 @@ header {
     margin: auto;
     padding: 5px;
     width: 75%;
-    height: 500px;
+    height: 400px;
     text-align: center;
     font-family: 'Overlock', cursive;
     font-size: 20px;
@@ -48,7 +48,7 @@ header {
 }
 
 button {
-    margin: 150px auto;
+    margin: 115px auto;
     width: 100px;
     font-family: 'Overlock', cursive;
     font-size: 30px;

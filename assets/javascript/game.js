@@ -7,7 +7,6 @@ let countDown = _ => {
     let timer = setTimeout(countDown, 1000)
     if (timeLeft === -1) {
         clearTimeout(timer)
-        alert('times up')
     } else {
         elem.innerHTML = `Time Remaining: ${timeLeft} seconds`
         timeLeft--
@@ -52,20 +51,24 @@ let questionSet = {
     }
 }
 
-let mouseOver = _ => {
-    document.getElementById('start').style.color = 'red'
+let renderQ1 = _ => {
+    document.querySelector('#startBtn').innerHTML = ``
+    document.querySelector('#question').innerHTML = `${questionSet.Question1.question}`
+    document.querySelector('#answerA').innerHTML = `${questionSet.Question1.answer1}`
+    document.querySelector('#answerB').innerHTML = `${questionSet.Question1.rightAnswer}`
+    document.querySelector('#answerC').innerHTML = `${questionSet.Question1.answer2}`
+    document.querySelector('#answerD').innerHTML = `${questionSet.Question1.answer3}`
 }
 
-let start = _ => {
-    // this is not working yet
-    document.querySelector('#start').addEventListener('click', countDown)
+let startGame = _ => {
+    countDown()
+    renderQ1()
+    
 }
-
-
 
 let init = _ => {
-    // countDown()
     document.querySelector('#startBtn').innerHTML = `<button>Start</button`
+    document.querySelector('#startBtn').addEventListener('click', startGame)
 }
 
 init()
