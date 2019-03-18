@@ -1,16 +1,5 @@
-let timeLeft = 30
-let elem = document.getElementById('timer')
-
-// countdown timer
-let countDown = _ => {
-    let timer = setTimeout(countDown, 1000)
-    if (timeLeft === -1) {
-        clearTimeout(timer)
-    } else {
-        elem.innerHTML = `Time Remaining: ${timeLeft} seconds`
-        timeLeft--
-    }
-}
+// borrowed heavily from this youtube video: https://www.youtube.com/watch?v=49pYIMygIcU
+// especially for figuring out how to identify right answers
 
 // question set array
 let questionSet = [
@@ -22,7 +11,10 @@ let questionSet = [
         answerC: 'Twelve',
         answerD: `There is no such thing as a Baker's Dozen`,
         correct: 'B',
-        display: `In the 1260s, British breadmakers were notorious for shorting customers with skimpy loaves. King Henry III was so irked by the problem that he implemented a new law to standardize the weight of a loaf—selling puny loaves could result in beatings or jail time. Since bakers wanted to stay on the right side of the law, one common trick was to give 13 loaves to any customer buying a dozen. Even if the loaves were light, the extra would cover the shortfall.`
+        correctText: `Yes!<br /> A Baker's Dozen would be 13 donuts.`,
+        wrongText: `Wrong!<br /> A Baker's Dozen would be 13 donuts.`,
+        timesUpText: `Time's Up!<br /> A Baker's Dozen would be 13 donuts.`,
+        image: `<img src="./assets/images/donuts.jpg">`,
     },
 
     {
@@ -32,8 +24,10 @@ let questionSet = [
         answerC: 'Cat',
         answerD: 'Bear',
         correct: 'A',
-        displayImage: '<img src="./assets/images/lassie.jpg">',
-        displayText: 'Yes! Lassie was a dog.',
+        correctText: 'Yes!<br /> Lassie was a dog.',
+        wrongText: 'Wrong!<br /> Lassie was a dog.',
+        timesUpText: `Time's Up!<br /> Lassie was a dog.`,
+        image: '<img src="./assets/images/lassie.png">',
     },
 
     {
@@ -43,7 +37,10 @@ let questionSet = [
         answerC: 'Frankfurt',
         answerD: 'London',
         correct: 'D',
-        display: '<img src="./assets/images/tower-of-london.jpg">'
+        correctText: 'Yes!<br /> The Tower of London is in London.',
+        wrongText: 'Wrong!<br /> The Tower of London is in London (duh).',
+        timesUpText: `Time's Up!<br /> The Tower of London is in London (duh).`,
+        image: '<img src="./assets/images/tower-of-london.jpg">',
     },
 
     {
@@ -53,13 +50,20 @@ let questionSet = [
         answerC: 'Zot Zot',
         answerD: 'Meow',
         correct: 'C',
-        displayText: 'Correct!',
-        displayImage: '<img src="./assets/images/anteater.jpg">',
+        correctText: 'Correct!',
+        wrongText: 'Wrong!<br /> The answer is "Zot Zot" <br /> (As an Anteater yourself you really ought to know this.)',
+        timesUpText: `Time's Up!<br /> The answer is "Zot Zot" <br /> (As an Anteater yourself you really ought to know this.)`,
+        image: '<img src="./assets/images/anteater.jpg">',
+
     }
 ]
 
+let correctAnswers = 0
+let incorrectAnswers = 0
+let notAnswered = 0
+
 // identifies index position of last question in array
-let lasQuestion = questionSet.length - 1
+let lastQuestion = questionSet.length - 1
 
 // sets current question to index 0
 let currentQuestion = 0
@@ -73,37 +77,101 @@ let renderQuestion = () => {
 }
 
 const clearPage = _ => {
-    document.querySelector('#timer').innerHTML = ``
     document.querySelector('#question').innerHTML = ``
     document.querySelector('#A').innerHTML = ``
     document.querySelector('#B').innerHTML = ``
     document.querySelector('#C').innerHTML = ``
     document.querySelector('#D').innerHTML = ``
+    document.querySelector('#imageHolder').innerHTML = ``
 }
 
-let startGame = _ => {
-    document.querySelector('#startBtn').innerHTML = ``
-    countDown()
-    currentQuestion = 1
-    renderQuestion()
+const clearTimer = _ => {
+    document.querySelector('#timer').innerHTML = ``
+}
 
+let displayTimesUp = _ => {
+    clearPage()
+    document.querySelector('#question').innerHTML = `${questionSet[currentQuestion].timesUpText}`
+    document.querySelector('#imageHolder').innerHTML = `${questionSet[currentQuestion].image}`
+    notAnswered++
+    setTimeout(nextQuestion, 5000)
+}
+
+let nextQuestion = _ => {
+    clearTimeout(nextQuestion)
+    clearPage()
+    if (currentQuestion !== lastQuestion) {
+        currentQuestion++
+        renderQuestion()
+        startTimer()
+    } else {
+        clearPage()
+        clearTimer()
+        document.querySelector('#summary').innerHTML = `
+        Summary:<br />
+        Correct Answers: ${correctAnswers}<br />
+        Incorrect Answers: ${incorrectAnswers}<br />
+        Not Answered: ${notAnswered}
+        `
+    }
+}
+
+// function countDown() {
+//     elem.innerHTML = `Time Remaining: ${timeLeft} seconds`
+//     timeLeft--
+//     document.querySelector('.answer').addEventListener('click', clearInterval(countdown))
+// } if (timeLeft === -1) {
+//     stopTimer()
+//     displayTimesUp()
+// }
+
+let displayWrong = _ => {
+    clearPage()
+    document.querySelector('#question').innerHTML = `${questionSet[currentQuestion].wrongText}`
+    document.querySelector('#imageHolder').innerHTML = `${questionSet[currentQuestion].image}`
+    incorrectAnswers++
+    // setTimeout(nextQuestion, 5000)
+}
+
+let displayCorrect = _ => {
+    clearPage()
+    document.querySelector('#question').innerHTML = `${questionSet[currentQuestion].correctText}`
+    document.querySelector('#imageHolder').innerHTML = `${questionSet[currentQuestion].image}`
+    correctAnswers++
+    // setTimeout(nextQuestion, 5000)
 }
 
 let checkAnswer = (answer) => {
     if (questionSet[currentQuestion].correct === answer) {
-        clearPage() // the timer is not clearing
-        clearTimeout(timer) // the timer is restarting when the results page is displayed
-        document.querySelector('#question').innerHTML = `${questionSet[currentQuestion].displayText}`
-        document.querySelector('.answerList').innerHTML = `${questionSet[currentQuestion].displayImage}`
+        displayCorrect()
     } else {
-        alert('WRONG!!!')
-        console.log(answer)
+        displayWrong()
     }
+}
+
+let startTimer = () => {
+    let timeLeft = 10
+    let elem = document.getElementById('timer')
+    let countDown = setInterval(function () {
+        document.querySelector('#timer').innerHTML = `Time Remaining: ${timeLeft} seconds`
+        timeLeft--
+        document.querySelector('.answerList').addEventListener('click', checkAnswer)
+        if (timeLeft === -1) {
+            clearInterval(countDown)
+            displayTimesUp()
+        }
+    }, 1000)
+}
+
+let startQuiz = _ => {
+    document.querySelector('#startBtn').innerHTML = ``
+    renderQuestion()
+    startTimer()
 }
 
 let init = _ => {
     document.querySelector('#startBtn').innerHTML = `<button>Start</button`
-    document.querySelector('#startBtn').addEventListener('click', startGame)
+    document.querySelector('#startBtn').addEventListener('click', startQuiz)
 }
 
 init()
