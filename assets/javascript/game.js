@@ -58,16 +58,18 @@ let questionSet = [
     }
 ]
 
+// variables for the summary page
 let correctAnswers = 0
 let incorrectAnswers = 0
 let notAnswered = 0
 
-// identifies index position of last question in array
+// identifies index position of last question in the question set array
 let lastQuestion = questionSet.length - 1
 
 // sets current question to index 0
 let currentQuestion = 0
 
+// function to display question & answer choices
 let renderQuestion = () => {
     document.querySelector('#question').innerHTML = `${questionSet[currentQuestion].question}`
     document.querySelector('#A').innerHTML = `${questionSet[currentQuestion].answerA}`
@@ -76,6 +78,7 @@ let renderQuestion = () => {
     document.querySelector('#D').innerHTML = `${questionSet[currentQuestion].answerD}`
 }
 
+// function to clear question and answer choices
 const clearPage = _ => {
     document.querySelector('#question').innerHTML = ``
     document.querySelector('#A').innerHTML = ``
@@ -83,12 +86,17 @@ const clearPage = _ => {
     document.querySelector('#C').innerHTML = ``
     document.querySelector('#D').innerHTML = ``
     document.querySelector('#imageHolder').innerHTML = ``
+    document.querySelector('#summary').innerHTML = ``
+    document.querySelector('#startOverBtn').innerHTML = ``
 }
 
+// function to clear the timer when the summary is displayed
 const clearTimer = _ => {
     document.querySelector('#timer').innerHTML = ``
 }
 
+// this is the text that is displayed when the clock runs out before an answer was selected
+// this page is displayed for 5 seconds before moving on to the next question
 let displayTimesUp = _ => {
     clearPage()
     document.querySelector('#question').innerHTML = `${questionSet[currentQuestion].timesUpText}`
@@ -97,6 +105,14 @@ let displayTimesUp = _ => {
     setTimeout(nextQuestion, 5000)
 }
 
+let startOver = _ => {
+    clearPage()
+    currentQuestion = 0
+    renderQuestion()
+    startTimer()
+}
+
+// this is the function to display the next question
 let nextQuestion = _ => {
     clearTimeout(nextQuestion)
     clearPage()
@@ -111,36 +127,33 @@ let nextQuestion = _ => {
         Summary:<br />
         Correct Answers: ${correctAnswers}<br />
         Incorrect Answers: ${incorrectAnswers}<br />
-        Not Answered: ${notAnswered}
-        `
+        Not Answered: ${notAnswered}`
+        document.querySelector('#startOverBtn').innerHTML = `<button>Start Over</button>`
+        document.querySelector('#startOverBtn').addEventListener('click', startOver )
     }
 }
 
-// function countDown() {
-//     elem.innerHTML = `Time Remaining: ${timeLeft} seconds`
-//     timeLeft--
-//     document.querySelector('.answer').addEventListener('click', clearInterval(countdown))
-// } if (timeLeft === -1) {
-//     stopTimer()
-//     displayTimesUp()
-// }
-
+// this is the text that is displayed if the wrong answer is selected
+// this page is displayed for 5 seconds before moving on to the next question
 let displayWrong = _ => {
     clearPage()
     document.querySelector('#question').innerHTML = `${questionSet[currentQuestion].wrongText}`
     document.querySelector('#imageHolder').innerHTML = `${questionSet[currentQuestion].image}`
     incorrectAnswers++
-    // setTimeout(nextQuestion, 5000)
+    setTimeout(nextQuestion, 5000)
 }
 
+// this is the text that is displayed when the correct answer is selected
+// this page is displayed for 5 seconds before moving on to the next question
 let displayCorrect = _ => {
     clearPage()
     document.querySelector('#question').innerHTML = `${questionSet[currentQuestion].correctText}`
     document.querySelector('#imageHolder').innerHTML = `${questionSet[currentQuestion].image}`
     correctAnswers++
-    // setTimeout(nextQuestion, 5000)
+    setTimeout(nextQuestion, 5000)
 }
 
+// this is the function to check if the correct answer has been selected
 let checkAnswer = (answer) => {
     if (questionSet[currentQuestion].correct === answer) {
         displayCorrect()
@@ -149,8 +162,10 @@ let checkAnswer = (answer) => {
     }
 }
 
+// this is the function to (re)start the timer
+// right now the questions only display for 10 seconds
 let startTimer = () => {
-    let timeLeft = 10
+    let timeLeft = 5
     let elem = document.getElementById('timer')
     let countDown = setInterval(function () {
         document.querySelector('#timer').innerHTML = `Time Remaining: ${timeLeft} seconds`
@@ -163,12 +178,20 @@ let startTimer = () => {
     }, 1000)
 }
 
+// this is a function to stop the timer when an answer is clicked, but it doesn't work
+stopTimer = () => {
+    clearInterval(countDown)
+}
+
+// this is the function to start the quiz after the 'start' button is clicked
 let startQuiz = _ => {
     document.querySelector('#startBtn').innerHTML = ``
     renderQuestion()
     startTimer()
 }
 
+
+// this is the initial display - just a start button
 let init = _ => {
     document.querySelector('#startBtn').innerHTML = `<button>Start</button`
     document.querySelector('#startBtn').addEventListener('click', startQuiz)

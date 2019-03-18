@@ -59,7 +59,7 @@ header {
 
 button {
     margin: 115px auto;
-    width: 100px;
+    width: 150px;
     font-family: 'Overlock', cursive;
     font-size: 30px;
     color: #fcefe0;
@@ -70,5 +70,4 @@ button {
     -moz-border-radius: 12px;
     -ms-border-radius: 12px;
     -o-border-radius: 12px;
-    /* opacity: 0.5; */
 }
