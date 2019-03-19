@@ -131,9 +131,9 @@ let displayTimesUp = _ => {
 let startOver = _ => {
     clearPage()
     currentQuestion = 0
-    let correctAnswers = 0
-    let incorrectAnswers = 0
-    let notAnswered = 0
+    correctAnswers = 0
+    incorrectAnswers = 0
+    notAnswered = 0
     renderQuestion()
     startTimer()
 }
