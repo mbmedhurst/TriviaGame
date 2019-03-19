@@ -51,8 +51,8 @@ let questionSet = [
         answerD: 'Meow',
         correct: 'C',
         correctText: 'Correct!',
-        wrongText: 'Wrong!<br /> The answer is "Zot Zot" <br /> (As an Anteater yourself you really ought to know this.)',
-        timesUpText: `Time's Up!<br /> The answer is "Zot Zot" <br /> (As an Anteater yourself you really ought to know this.)`,
+        wrongText: 'Wrong!<br /> The answer is Zot Zot',
+        timesUpText: `Time's Up!<br /> The answer is Zot Zot`,
         image: '<img src="./assets/images/anteater.jpg">',
 
     }
@@ -90,6 +90,29 @@ const clearPage = _ => {
     document.querySelector('#startOverBtn').innerHTML = ``
 }
 
+// thanks again to katie for helping to get the countdown timer to work properly
+
+//Decrements counter
+let decrement = () => {
+    document.querySelector("#timer").innerHTML = `Time Remaining: ${timeLeft} seconds`
+    timeLeft--
+    if (timeLeft === -1) {
+      displayTimesUp()
+      stopTimer()
+    }
+  }
+
+//StarTimer function
+let startTimer = () => {
+    timeLeft = 20
+    increment = setInterval(decrement, 1000)
+}
+
+//Stops timer
+  stopTimer = () => {
+    clearInterval(increment)
+  }
+
 // function to clear the timer when the summary is displayed
 const clearTimer = _ => {
     document.querySelector('#timer').innerHTML = ``
@@ -108,6 +131,9 @@ let displayTimesUp = _ => {
 let startOver = _ => {
     clearPage()
     currentQuestion = 0
+    let correctAnswers = 0
+    let incorrectAnswers = 0
+    let notAnswered = 0
     renderQuestion()
     startTimer()
 }
@@ -129,7 +155,7 @@ let nextQuestion = _ => {
         Incorrect Answers: ${incorrectAnswers}<br />
         Not Answered: ${notAnswered}`
         document.querySelector('#startOverBtn').innerHTML = `<button>Start Over</button>`
-        document.querySelector('#startOverBtn').addEventListener('click', startOver )
+        document.querySelector('#startOverBtn').addEventListener('click', startOver)
     }
 }
 
@@ -155,6 +181,8 @@ let displayCorrect = _ => {
 
 // this is the function to check if the correct answer has been selected
 let checkAnswer = (answer) => {
+    stopTimer()
+    console.log(answer)
     if (questionSet[currentQuestion].correct === answer) {
         displayCorrect()
     } else {
@@ -162,26 +190,13 @@ let checkAnswer = (answer) => {
     }
 }
 
-// this is the function to (re)start the timer
-// right now the questions only display for 10 seconds
-let startTimer = () => {
-    let timeLeft = 5
-    let elem = document.getElementById('timer')
-    let countDown = setInterval(function () {
-        document.querySelector('#timer').innerHTML = `Time Remaining: ${timeLeft} seconds`
-        timeLeft--
-        document.querySelector('.answerList').addEventListener('click', checkAnswer)
-        if (timeLeft === -1) {
-            clearInterval(countDown)
-            displayTimesUp()
-        }
-    }, 1000)
-}
+//Function to reset timer
+let resetTimer = () => {
+    let timeLeft = 20
+    document.querySelector("#timer").innerHTML = `Time Remaining: ${timeLeft} seconds`
+  };
+  
 
-// this is a function to stop the timer when an answer is clicked, but it doesn't work
-stopTimer = () => {
-    clearInterval(countDown)
-}
 
 // this is the function to start the quiz after the 'start' button is clicked
 let startQuiz = _ => {

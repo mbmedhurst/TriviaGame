@@ -18,7 +18,7 @@ header {
     height: 400px;
     text-align: center;
     font-family: 'Overlock', cursive;
-    font-size: 20px;
+    font-size: 18px;
     color: #b03719;
     background-color: #fcefe0;
     border: 3px solid #b03719;
@@ -55,6 +55,10 @@ header {
     background-color: #b03719;
     color: #fcefe0;
     cursor: pointer;
+}
+
+#summaryList {
+    border: 1px solid;
 }
 
 button {
