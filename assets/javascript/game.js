@@ -97,10 +97,10 @@ let decrement = () => {
     document.querySelector("#timer").innerHTML = `Time Remaining: ${timeLeft} seconds`
     timeLeft--
     if (timeLeft === -1) {
-      displayTimesUp()
-      stopTimer()
+        displayTimesUp()
+        stopTimer()
     }
-  }
+}
 
 //StarTimer function
 let startTimer = () => {
@@ -109,9 +109,9 @@ let startTimer = () => {
 }
 
 //Stops timer
-  stopTimer = () => {
+stopTimer = () => {
     clearInterval(increment)
-  }
+}
 
 // function to clear the timer when the summary is displayed
 const clearTimer = _ => {
@@ -194,9 +194,7 @@ let checkAnswer = (answer) => {
 let resetTimer = () => {
     let timeLeft = 20
     document.querySelector("#timer").innerHTML = `Time Remaining: ${timeLeft} seconds`
-  };
-  
-
+};
 
 // this is the function to start the quiz after the 'start' button is clicked
 let startQuiz = _ => {
@@ -204,7 +202,6 @@ let startQuiz = _ => {
     renderQuestion()
     startTimer()
 }
-
 
 // this is the initial display - just a start button
 let init = _ => {
