@@ -128,6 +128,7 @@ let displayTimesUp = _ => {
     setTimeout(nextQuestion, 5000)
 }
 
+// start over function - when start over button is clicked on summary page
 let startOver = _ => {
     clearPage()
     currentQuestion = 0
@@ -150,7 +151,7 @@ let nextQuestion = _ => {
         clearPage()
         clearTimer()
         document.querySelector('#summary').innerHTML = `
-        Summary:<br />
+        <h2>Summary</h2><br />
         Correct Answers: ${correctAnswers}<br />
         Incorrect Answers: ${incorrectAnswers}<br />
         Not Answered: ${notAnswered}`

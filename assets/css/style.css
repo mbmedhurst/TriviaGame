@@ -57,8 +57,12 @@ header {
     cursor: pointer;
 }
 
-#summaryList {
-    border: 1px solid;
+#summary {
+    font-size: 25px;
+}
+
+#correct, #incorrect, #notAnswered {
+    font-size: 20px;
 }
 
 button {
